@@ -92,7 +92,7 @@ tr:nth-child(even) {
 }
 
 .formbold-input-flex>div {
-    width: 50%;
+    width: 100%;
 }
 
 .formbold-form-input {
@@ -166,7 +166,7 @@ tr:nth-child(even) {
     padding: 14px 25px;
     border: none;
     font-weight: 500;
-    background-color: #6a64f1;
+    background-color: #8a7c66;
     color: white;
     cursor: pointer;
     margin-top: 25px;

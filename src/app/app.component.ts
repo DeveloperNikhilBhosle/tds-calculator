@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { RouterOutlet } from '@angular/router';
+import { debug } from 'console';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +14,17 @@ import { RouterOutlet } from '@angular/router';
 export class AppComponent {
   title = 'tds-calculator';
 
-  onSubmit() {
+  isBrowser: boolean = false;;
+  Percentage_Of_Basic_Salary: string = "Not Checked";
+  Basic_Salary_HRA: number = 0;
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
+
+  ngOnInit(): void {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+    if (this.isBrowser) {
+      // Browser-specific code
+    }
   }
 
   checkValue(event: any) {
@@ -41,6 +53,7 @@ export class AppComponent {
   }
 
   DataChecker() {
+    debugger;
     var salary = {
       may: Number((document.getElementById('May') as HTMLInputElement).value),
       june: Number((document.getElementById('June') as HTMLInputElement).value),
@@ -57,8 +70,37 @@ export class AppComponent {
       total: 0
     };
 
-    salary.total = salary.jan + salary.feb + salary.mar + salary.apr + salary.may + salary.june + salary.july + salary.aug + salary.sep + salary.oct + salary.nov + salary.dec;
+    return salary.total = salary.jan + salary.feb + salary.mar + salary.apr + salary.may + salary.june + salary.july + salary.aug + salary.sep + salary.oct + salary.nov + salary.dec;
   }
 
+  calculateHRA() {
+    debugger;
+
+    const yesno = ((document.getElementById('is_metro_city') as HTMLInputElement)).value;
+    this.Percentage_Of_Basic_Salary = (yesno == 'YES' ? "50%" : '40%');
+
+    const salary = this.DataChecker();
+    if (!salary || salary == 0) {
+      alert("Please Enter Salary First and ReCheck");
+    }
+    const rentyearly = ((document.getElementById('total_rent_paid') as HTMLInputElement)).value;
+
+    this.Basic_Salary_HRA = salary * (yesno == 'YES' ? 0.5 : 0.4);
+
+    // const x = document.getElementById('total_rent_paid');
+
+  }
+
+  onSubmit(event: any) {
+    debugger;
+    if (event == 1) {
+      ((document.getElementById('form-data') as HTMLInputElement)).setAttribute("style", "display: none");
+      ((document.getElementById('form-data-output') as HTMLInputElement)).setAttribute("style", "display: block");
+    } else {
+      ((document.getElementById('form-data-output') as HTMLInputElement)).setAttribute("style", "display: none");
+      ((document.getElementById('form-data') as HTMLInputElement)).setAttribute("style", "display: block");
+    }
+
+  }
 
 }
